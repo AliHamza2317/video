@@ -53,7 +53,7 @@ export const HEADLINES: Record<SceneId, Headline> = {
  * move the rings and clicks onto the parts worth pointing at.
  */
 export type CameraKey = {t: number; x: number; y: number; zoom: number};
-export type Ring = {t: number; x: number; y: number; w: number; h: number};
+export type Ring = {t: number; x: number; y: number; w: number; h: number; hold?: number};
 export type Click = {t: number; x: number; y: number};
 
 export type ScreenSpec = {
@@ -68,16 +68,23 @@ export type ScreenSpec = {
 };
 
 export const SCREENS: Record<'channels' | 'direct' | 'ai' | 'reporting', ScreenSpec> = {
+  // Unified Calendar (2000x1296): Airbnb and Booking.com stays on one calendar,
+  // then a click on Refresh to sync.
   channels: {
     file: 'channel-manager',
     label: 'Channel Manager screen',
-    aspect: 16 / 10,
+    aspect: 2000 / 1296,
     camera: [
-      {t: 0, x: 0.5, y: 0.5, zoom: 1.0},
-      {t: 7.2, x: 0.56, y: 0.48, zoom: 1.28},
+      {t: 0, x: 0.33, y: 0.46, zoom: 2.0},
+      {t: 2.6, x: 0.5, y: 0.47, zoom: 2.1},
+      {t: 4.6, x: 0.74, y: 0.45, zoom: 2.1},
+      {t: 7.2, x: 0.76, y: 0.46, zoom: 2.2},
     ],
-    rings: [{t: 1.0, x: 0.36, y: 0.32, w: 0.42, h: 0.3}],
-    clicks: [{t: 3.6, x: 0.7, y: 0.56}],
+    rings: [
+      {t: 0.5, x: 0.272, y: 0.355, w: 0.174, h: 0.042},
+      {t: 2.2, x: 0.4885, y: 0.411, w: 0.149, h: 0.042},
+    ],
+    clicks: [{t: 5.4, x: 0.946, y: 0.273}],
   },
   direct: {
     file: 'booking-website',
@@ -90,19 +97,23 @@ export const SCREENS: Record<'channels' | 'direct' | 'ai' | 'reporting', ScreenS
     rings: [{t: 3.4, x: 0.66, y: 0.56, w: 0.24, h: 0.14}],
     clicks: [{t: 2.8, x: 0.78, y: 0.63}],
   },
+  // Conversations (2000x1296): the AI-generated reply, AI reply suggestions,
+  // then a click on the composer's AI button.
   ai: {
     file: 'guest-messaging',
     label: 'Guest messaging screen',
-    aspect: 16 / 10,
+    aspect: 2000 / 1296,
     camera: [
-      {t: 0, x: 0.5, y: 0.45, zoom: 1.05},
-      {t: 7.6, x: 0.6, y: 0.58, zoom: 1.32},
+      {t: 0, x: 0.6, y: 0.38, zoom: 2.1},
+      {t: 3.0, x: 0.53, y: 0.62, zoom: 2.0},
+      {t: 5.2, x: 0.52, y: 0.84, zoom: 2.1},
+      {t: 7.6, x: 0.52, y: 0.86, zoom: 2.15},
     ],
     rings: [
-      {t: 1.0, x: 0.3, y: 0.3, w: 0.4, h: 0.14},
-      {t: 3.1, x: 0.45, y: 0.5, w: 0.45, h: 0.16},
+      {t: 0.5, x: 0.4635, y: 0.38, w: 0.302, h: 0.085},
+      {t: 3.0, x: 0.284, y: 0.698, w: 0.481, h: 0.121},
     ],
-    clicks: [],
+    clicks: [{t: 5.6, x: 0.7105, y: 0.915}],
   },
   reporting: {
     file: 'reporting',

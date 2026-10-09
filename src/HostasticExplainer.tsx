@@ -27,7 +27,7 @@ export type ExplainerProps = {showCaptions: boolean};
 export const HostasticExplainer: React.FC<ExplainerProps> = ({showCaptions}) => {
   const half = TRANSITION_FRAMES / 2;
   return (
-    <AbsoluteFill style={{background: colors.bg}}>
+    <AbsoluteFill style={{background: colors.cream}}>
       {SCENES.map((scene, i) => {
         // Crossfades are centred on the cut, so each scene starts half a
         // transition early and runs half a transition past its end.

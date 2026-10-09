@@ -12,7 +12,7 @@ export const Headline: React.FC<{
   color?: string;
   align?: 'left' | 'center';
   style?: React.CSSProperties;
-}> = ({spec, size = 74, accentColor = colors.teal, color = colors.ink, align = 'left', style}) => {
+}> = ({spec, size = 80, accentColor = colors.orange, color = colors.ink, align = 'left', style}) => {
   const frame = useSceneFrame();
   const start = -4; // the scene's sequence begins half a crossfade early
   return (
@@ -29,16 +29,21 @@ export const Headline: React.FC<{
         <div
           style={{
             ...enter(frame, start, 14),
-            marginBottom: 28,
-            padding: '9px 20px',
+            marginBottom: 30,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            padding: '10px 22px 10px 18px',
             borderRadius: 999,
-            background: colors.tealTint,
-            color: colors.tealDark,
+            background: colors.white,
+            boxShadow: '0 6px 18px rgba(28,27,41,0.08)',
+            color: colors.ink,
             fontFamily: fonts.body,
-            fontWeight: 700,
+            fontWeight: 600,
             fontSize: 24,
           }}
         >
+          <span style={{width: 10, height: 10, borderRadius: 5, background: colors.orange}} />
           {spec.chip}
         </div>
       ) : null}
@@ -48,10 +53,10 @@ export const Headline: React.FC<{
           style={{
             ...enter(frame, start + i * 2, 26),
             fontFamily: fonts.display,
-            fontWeight: 800,
+            fontWeight: 400,
             fontSize: size,
-            lineHeight: 1.08,
-            letterSpacing: '-0.035em',
+            lineHeight: 1.06,
+            letterSpacing: '-0.01em',
             color: spec.accent?.includes(i) ? accentColor : color,
           }}
         >

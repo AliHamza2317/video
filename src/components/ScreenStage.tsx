@@ -65,7 +65,7 @@ export const ScreenStage: React.FC<{spec: ScreenSpec; box: Box}> = ({spec, box})
         borderRadius: 24,
         overflow: 'hidden',
         background: '#fff',
-        boxShadow: '0 30px 70px rgba(14,47,56,0.16), 0 6px 18px rgba(14,47,56,0.08)',
+        boxShadow: '0 30px 70px rgba(60,40,20,0.14), 0 6px 18px rgba(60,40,20,0.07)',
         outline: `1px solid ${colors.line}`,
         ...enterScale(frame, -4, 0.96),
       }}
@@ -116,7 +116,8 @@ const HighlightRing: React.FC<{
   until?: number;
 }> = ({ring, cw, ch, zoom, frame, until}) => {
   const start = sec(ring.t);
-  const end = until !== undefined ? sec(until) : Infinity;
+  // Each ring holds for `hold` seconds (default 2.4) or until the next one.
+  const end = Math.min(until !== undefined ? sec(until) : Infinity, sec(ring.t + (ring.hold ?? 2.4)));
   if (frame < start) return null;
   const p = tween(frame, start, start + 12, 0, 1, easeOut);
   const out = end === Infinity ? 1 : tween(frame, end - 2, end + 8, 1, 0);
@@ -131,8 +132,8 @@ const HighlightRing: React.FC<{
         width: ring.w * cw,
         height: ring.h * ch,
         borderRadius: 18 / zoom,
-        border: `${stroke}px solid ${colors.teal}`,
-        boxShadow: `0 0 0 ${(6 + pulse * 6) / zoom}px rgba(18,165,160,${0.18 + pulse * 0.1}), 0 0 ${30 / zoom}px rgba(18,165,160,0.35)`,
+        border: `${stroke}px solid ${colors.orange}`,
+        boxShadow: `0 0 0 ${(6 + pulse * 6) / zoom}px rgba(247,142,82,${0.2 + pulse * 0.12}), 0 0 ${30 / zoom}px rgba(247,142,82,0.4)`,
         opacity: p * out,
         transform: `scale(${1.08 - 0.08 * p})`,
       }}
@@ -168,7 +169,7 @@ const CursorClick: React.FC<{
             width: 80 / zoom,
             height: 80 / zoom,
             borderRadius: '50%',
-            border: `${4 / zoom}px solid ${colors.teal}`,
+            border: `${4 / zoom}px solid ${colors.orange}`,
             transform: `scale(${0.3 + ripple})`,
             opacity: 1 - ripple,
           }}
@@ -180,7 +181,7 @@ const CursorClick: React.FC<{
         viewBox="0 0 24 24"
         style={{position: 'absolute', left: -size * 0.12, top: -size * 0.06, transform: `scale(${pressed ? 0.86 : 1})`, transformOrigin: '10% 6%', filter: 'drop-shadow(0 3px 5px rgba(0,0,0,0.3))'}}
       >
-        <path d="M3 2 L3 19 L8 14.5 L11.5 22 L14.5 20.6 L11 13.4 L18 13.4 Z" fill="#14262C" stroke="#fff" strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="M3 2 L3 19 L8 14.5 L11.5 22 L14.5 20.6 L11 13.4 L18 13.4 Z" fill={colors.ink} stroke="#fff" strokeWidth="1.6" strokeLinejoin="round" />
       </svg>
     </div>
   );
@@ -191,15 +192,15 @@ const PlaceholderCanvas: React.FC<{label: string}> = ({label}) => (
     style={{
       width: '100%',
       height: '100%',
-      background: 'repeating-linear-gradient(45deg, #EEF4F5 0px, #EEF4F5 26px, #E2EBED 26px, #E2EBED 52px)',
+      background: 'repeating-linear-gradient(45deg, #FBF3EA 0px, #FBF3EA 26px, #F3E8DC 26px, #F3E8DC 52px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       boxSizing: 'border-box',
-      border: '6px dashed #A9BEC3',
+      border: '6px dashed #D2BFAE',
     }}
   >
-    <div style={{fontFamily: fonts.display, fontWeight: 800, fontSize: 64, color: '#9DB2B7', textAlign: 'center', lineHeight: 1.1}}>
+    <div style={{fontFamily: fonts.display, fontSize: 64, color: '#C8B3A1', textAlign: 'center', lineHeight: 1.1}}>
       PLACEHOLDER
       <br />
       {label}

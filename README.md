@@ -3,7 +3,11 @@
 A 45-second, 7-scene explainer for hostasticnow.com, built with [Remotion](https://www.remotion.dev/) (React to MP4).
 
 - **Format:** 1920×1080, 30 fps, H.264 video with AAC audio, loudness-normalised to -14 LUFS
-- **Look:** light, clean teal-and-white with a big headline on the left, the app screen on the right and burned-in captions at the bottom
+- **Look:** matches the Hostastic web app and hostasticnow.com:
+  - warm cream background (#FFF8EF) with soft peach glows
+  - Hostastic orange (#F78E52) accents and CTA, ink (#1C1B29) text, navy caption bars
+  - serif headlines (DM Serif Display) with Inter for body text
+  - big headline on the left, the app screen on the right, captions at the bottom
 - **Narration:** AI voiceover (Kokoro, voice `af_heart`), about 145 spoken words per minute
 - **Pacing:**
   - Every headline and visual is on screen within 0.3 s.
@@ -17,9 +21,9 @@ A 45-second, 7-scene explainer for hostasticnow.com, built with [Remotion](https
 | Asset | Status |
 |---|---|
 | Logo | ✅ `public/brand/hostastic-logo.png`, the client file, byte-identical and untouched |
-| Channel Manager screen | ⚠️ **Missing.** A labelled placeholder is used. |
+| Channel Manager screen | ✅ `public/screens/channel-manager.webp`, the Unified Calendar screen |
 | Booking website screen | ⚠️ **Missing.** A labelled placeholder is used. |
-| Guest messaging screen | ⚠️ **Missing.** A labelled placeholder is used. |
+| Guest messaging screen | ✅ `public/screens/guest-messaging.jpg`, the Conversations screen |
 | Reporting screen | ⚠️ **Missing.** A labelled placeholder is used. |
 | Voiceover | ✅ `public/audio/voiceover.wav`, generated |
 | Music | ⚠️ **Missing.** The slot is ready; see [Music](#music). |
@@ -64,6 +68,8 @@ Each file replaces its placeholder automatically. Then open `SCREENS` in `src/sc
 - **`clicks`:** cursor clicks, each with a target position and a time.
 
 Positions are fractions of the screen (0 to 1, measured from the top-left). Times are seconds from the start of the scene. The current values are placeholders, so move them onto the parts of the UI worth pointing at. `npm run studio` shows the result live. Screen recordings play from `videoStart` seconds.
+
+The app screens are used exactly as supplied, so their own text appears on screen. The Conversations screenshot has two em dashes in its AI message text ("a 10am arrival — I'll prepare…" and "happy to help — let me check…"). To remove them, export a new screenshot without them.
 
 ## Logo
 
@@ -132,4 +138,4 @@ The mix sets the music about 18 dB under the voice and lifts it where there is n
 
 - **Remotion:** free for individuals and companies of up to 3 people; larger companies need a license (<https://www.remotion.dev/license>).
 - **Kokoro model:** Apache-2.0.
-- **Inter and Plus Jakarta Sans:** SIL Open Font License.
+- **Inter and DM Serif Display:** SIL Open Font License.

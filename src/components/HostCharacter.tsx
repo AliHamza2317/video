@@ -22,7 +22,7 @@ export const HostCharacter: React.FC<{
   pose,
   frame,
   width = 600,
-  shirt = colors.teal,
+  shirt = colors.orange,
   chair = '#24434C',
   desk = colors.desk,
   deskEdge = colors.deskEdge,

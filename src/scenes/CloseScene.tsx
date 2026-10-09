@@ -29,14 +29,13 @@ export const CloseScene: React.FC = () => {
             ...enter(frame, -2, 24),
             marginTop: 54,
             fontFamily: fonts.display,
-            fontWeight: 800,
-            fontSize: 72,
-            letterSpacing: '-0.035em',
+            fontSize: 80,
+            letterSpacing: '-0.01em',
             color: colors.ink,
             whiteSpace: 'nowrap',
           }}
         >
-          {first} <span style={{color: colors.teal}}>{second}</span>
+          {first} <span style={{color: colors.orange}}>{second}</span>
         </div>
         <div style={{...enter(frame, 1, 20), marginTop: 52, position: 'relative'}}>
           <div
@@ -46,13 +45,13 @@ export const CloseScene: React.FC = () => {
               gap: 14,
               padding: '24px 52px',
               borderRadius: 999,
-              background: `linear-gradient(135deg, #1BB9B3 0%, ${colors.tealDark} 100%)`,
+              background: `linear-gradient(135deg, ${colors.orange} 0%, ${colors.orangeDeep} 100%)`,
               color: '#fff',
               fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: 40,
               transform: `scale(${pressed ? 0.96 : 1})`,
-              boxShadow: `0 0 0 ${8 + glow * 12}px rgba(18,165,160,${0.12 + glow * 0.1}), 0 20px 40px rgba(18,165,160,0.35)`,
+              boxShadow: `0 0 0 ${8 + glow * 12}px rgba(247,142,82,${0.14 + glow * 0.1}), 0 20px 40px rgba(236,117,54,0.35)`,
             }}
           >
             {CTA_LABEL}
@@ -81,7 +80,7 @@ const Cursor: React.FC<{frame: number}> = ({frame}) => {
         <div style={{position: 'absolute', left: -40, top: -40, width: 80, height: 80, borderRadius: '50%', border: '4px solid #fff', transform: `scale(${0.3 + ripple})`, opacity: 1 - ripple}} />
       ) : null}
       <svg width={48} height={48} viewBox="0 0 24 24" style={{position: 'absolute', left: -6, top: -3, filter: 'drop-shadow(0 3px 5px rgba(0,0,0,0.3))'}}>
-        <path d="M3 2 L3 19 L8 14.5 L11.5 22 L14.5 20.6 L11 13.4 L18 13.4 Z" fill="#14262C" stroke="#fff" strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="M3 2 L3 19 L8 14.5 L11.5 22 L14.5 20.6 L11 13.4 L18 13.4 Z" fill={colors.ink} stroke="#fff" strokeWidth="1.6" strokeLinejoin="round" />
       </svg>
     </div>
   );

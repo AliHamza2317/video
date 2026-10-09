@@ -1,34 +1,32 @@
+// Hostastic brand theme, sampled from the logo, the web app and hostasticnow.com.
 export const colors = {
-  // Brand: teal-and-white
-  teal: '#12A5A0',
-  tealDark: '#0B807C',
-  tealDeep: '#08605D',
-  tealTint: '#E7F6F5',
-  tealTint2: '#CBEDEA',
-  ink: '#0E2F38',
-  slate: '#55666E',
-  muted: '#8A9AA1',
-  line: '#DDE8EA',
-  bg: '#F4FAFA',
+  // Brand
+  orange: '#F78E52', // logo mark, primary CTA, accents
+  orangeDeep: '#EC7536',
+  peach: '#FCEBE4', // AI bubbles, selected states
+  peachGlow: '#FDDCCB',
+  cream: '#FFF8EF', // app and site background
+  ink: '#1C1B29', // logo wordmark, headings
+  navy: '#2D2B41', // secondary buttons
+  navyLight: '#4F4D75',
+  slate: '#5F5C6E',
+  muted: '#9B97A6',
+  line: '#ECE3D9',
   white: '#FFFFFF',
 
-  // Soft accents
+  // Accents
   coral: '#FF7E67',
   amber: '#F5B444',
-  mint: '#59D2B4',
-  sky: '#5AA9E6',
 
   // Booking channels
   airbnb: '#FF5A5F',
   booking: '#0A3D91',
   vrbo: '#2F64D6',
-  direct: '#12A5A0',
 
   // Scene 1 (muted, cluttered)
   dull: '#D5D1C9',
-  dullDark: '#8F8A82',
-  dullInk: '#3F4246',
-  alarm: '#B85A4F',
+  dullInk: '#3A3845',
+  alarm: '#C2553F',
 
   // Illustration
   skin: '#D49B78',
@@ -39,18 +37,7 @@ export const colors = {
 } as const;
 
 export const fonts = {
-  display: '"Plus Jakarta Sans", Inter, system-ui, sans-serif',
+  // Headings: high-contrast serif, as on hostasticnow.com
+  display: '"DM Serif Display", Georgia, serif',
   body: 'Inter, system-ui, sans-serif',
-} as const;
-
-export const shadows = {
-  card: '0 30px 70px rgba(14, 47, 56, 0.14), 0 6px 18px rgba(14, 47, 56, 0.07)',
-  soft: '0 12px 30px rgba(14, 47, 56, 0.10)',
-  tile: '0 16px 36px rgba(14, 47, 56, 0.18)',
-} as const;
-
-export const radius = {
-  card: 28,
-  window: 22,
-  pill: 999,
 } as const;
