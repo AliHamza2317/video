@@ -22,9 +22,9 @@ A 45-second, 7-scene explainer for hostasticnow.com, built with [Remotion](https
 |---|---|
 | Logo | ✅ `public/brand/hostastic-logo.png`, the client file, byte-identical and untouched |
 | Channel Manager screen | ✅ `public/screens/channel-manager.webp`, the Unified Calendar screen |
-| Booking website screen | ⚠️ **Missing.** A labelled placeholder is used. |
-| Guest messaging screen | ✅ `public/screens/guest-messaging.jpg`, the Conversations screen |
-| Reporting screen | ⚠️ **Missing.** A labelled placeholder is used. |
+| Booking website screen | 🎨 Designed in the Hostastic style: `src/designs/BookingSiteDesign.tsx` (Sunset Villa Malibu direct-booking site, using the villa photo from the login screen) |
+| Guest messaging screen | ✅ `public/screens/guest-messaging.jpg`, the Conversations screen, shown softly behind three animated AI chat cards (`src/scenes/ChatScene.tsx`) |
+| Reporting screen | 🎨 Designed in the Hostastic style: `src/designs/ReportsDesign.tsx` (Reports screen with invoices, today's check-ins and checkouts, and guest, property and channel reports; no "Dashboard" anywhere) |
 | Voiceover | ✅ `public/audio/voiceover.wav`, generated |
 | Music | ⚠️ **Missing.** The slot is ready; see [Music](#music). |
 
@@ -60,7 +60,7 @@ Put one file per screen in `public/screens/`. Supported formats are png, jpg, we
 | 5. Guest messaging | `guest-messaging.png` |
 | 6. Reporting | `reporting.png` |
 
-Each file replaces its placeholder automatically. Then open `SCREENS` in `src/script.ts` and adjust each entry:
+Each file replaces its placeholder, or the designed screen, automatically. Then open `SCREENS` in `src/script.ts` and adjust each entry:
 
 - **`aspect`:** width ÷ height of the file (for example `1440 / 900`).
 - **`camera`:** keyframes for the slow push-in and pan. Each sets a centre point and a zoom.
@@ -68,6 +68,8 @@ Each file replaces its placeholder automatically. Then open `SCREENS` in `src/sc
 - **`clicks`:** cursor clicks, each with a target position and a time.
 
 Positions are fractions of the screen (0 to 1, measured from the top-left). Times are seconds from the start of the scene. The current values are placeholders, so move them onto the parts of the UI worth pointing at. `npm run studio` shows the result live. Screen recordings play from `videoStart` seconds.
+
+The designed screens reuse names and figures from the supplied screens: the June 2026 calendar totals and the David Statham booking. The chat cards' copy lives in `CHAT_CARDS` in `src/script.ts`.
 
 The app screens are used exactly as supplied, so their own text appears on screen. The Conversations screenshot has two em dashes in its AI message text ("a 10am arrival — I'll prepare…" and "happy to help — let me check…"). To remove them, export a new screenshot without them.
 

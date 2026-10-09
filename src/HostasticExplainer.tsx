@@ -3,6 +3,7 @@ import {AbsoluteFill, Sequence} from 'remotion';
 import {Captions} from './components/Captions';
 import {SceneTransition} from './components/SceneTransition';
 import {Soundtrack} from './components/Soundtrack';
+import {ChatScene} from './scenes/ChatScene';
 import {CloseScene} from './scenes/CloseScene';
 import {FeatureScene} from './scenes/FeatureScene';
 import {ProblemScene} from './scenes/ProblemScene';
@@ -17,7 +18,7 @@ const RENDER: Record<SceneId, React.FC> = {
   solution: SolutionScene,
   channels: () => <FeatureScene id="channels" />,
   direct: () => <FeatureScene id="direct" />,
-  ai: () => <FeatureScene id="ai" />,
+  ai: ChatScene,
   reporting: () => <FeatureScene id="reporting" />,
   close: CloseScene,
 };

@@ -67,7 +67,7 @@ export type ScreenSpec = {
   videoStart?: number;
 };
 
-export const SCREENS: Record<'channels' | 'direct' | 'ai' | 'reporting', ScreenSpec> = {
+export const SCREENS: Record<'channels' | 'direct' | 'reporting', ScreenSpec> = {
   // Unified Calendar (2000x1296): Airbnb and Booking.com stays on one calendar,
   // then a click on Refresh to sync.
   channels: {
@@ -86,47 +86,108 @@ export const SCREENS: Record<'channels' | 'direct' | 'ai' | 'reporting', ScreenS
     ],
     clicks: [{t: 5.4, x: 0.946, y: 0.273}],
   },
+  // Designed in the app's style (src/designs/BookingSiteDesign.tsx, 1600x1037):
+  // the host's own domain, then Book now, the host notification and the
+  // $0.00 commission line.
   direct: {
     file: 'booking-website',
     label: 'Booking website screen',
-    aspect: 16 / 10,
+    aspect: 1600 / 1037,
     camera: [
-      {t: 0, x: 0.45, y: 0.32, zoom: 1.12},
-      {t: 5.4, x: 0.6, y: 0.62, zoom: 1.3},
-    ],
-    rings: [{t: 3.4, x: 0.66, y: 0.56, w: 0.24, h: 0.14}],
-    clicks: [{t: 2.8, x: 0.78, y: 0.63}],
-  },
-  // Conversations (2000x1296): the AI-generated reply, AI reply suggestions,
-  // then a click on the composer's AI button.
-  ai: {
-    file: 'guest-messaging',
-    label: 'Guest messaging screen',
-    aspect: 2000 / 1296,
-    camera: [
-      {t: 0, x: 0.6, y: 0.38, zoom: 2.1},
-      {t: 3.0, x: 0.53, y: 0.62, zoom: 2.0},
-      {t: 5.2, x: 0.52, y: 0.84, zoom: 2.1},
-      {t: 7.6, x: 0.52, y: 0.86, zoom: 2.15},
+      {t: 0, x: 0.44, y: 0.4, zoom: 1.15},
+      {t: 2.0, x: 0.72, y: 0.42, zoom: 1.5},
+      {t: 2.8, x: 0.74, y: 0.37, zoom: 1.5},
+      {t: 5.4, x: 0.76, y: 0.36, zoom: 1.62},
     ],
     rings: [
-      {t: 0.5, x: 0.4635, y: 0.38, w: 0.302, h: 0.085},
-      {t: 3.0, x: 0.284, y: 0.698, w: 0.481, h: 0.121},
+      {t: 0.3, x: 0.318, y: 0.004, w: 0.364, h: 0.047, hold: 1.8},
+      {t: 3.3, x: 0.652, y: 0.486, w: 0.314, h: 0.05},
     ],
-    clicks: [{t: 5.6, x: 0.7105, y: 0.915}],
+    clicks: [{t: 2.3, x: 0.8125, y: 0.3857}],
   },
+  // Designed in the app's style (src/designs/ReportsDesign.tsx, 1600x1037):
+  // invoices, today's check-ins and checkouts, then guest, property and
+  // channel reports.
   reporting: {
     file: 'reporting',
     label: 'Reporting screen',
-    aspect: 16 / 10,
+    aspect: 1600 / 1037,
     camera: [
-      {t: 0, x: 0.36, y: 0.4, zoom: 1.2},
-      {t: 8.2, x: 0.62, y: 0.55, zoom: 1.2},
+      {t: 0, x: 0.33, y: 0.53, zoom: 1.45},
+      {t: 2.9, x: 0.68, y: 0.55, zoom: 1.45},
+      {t: 5.6, x: 0.74, y: 0.6, zoom: 1.6},
+      {t: 8.2, x: 0.75, y: 0.62, zoom: 1.7},
     ],
     rings: [
-      {t: 0.9, x: 0.1, y: 0.18, w: 0.4, h: 0.18},
-      {t: 3.4, x: 0.55, y: 0.45, w: 0.38, h: 0.3},
+      {t: 0.3, x: 0.076, y: 0.343, w: 0.458, h: 0.618, hold: 1.1},
+      {t: 1.45, x: 0.076, y: 0.222, w: 0.446, h: 0.108, hold: 1.5},
+      {t: 5.5, x: 0.55, y: 0.469, w: 0.4125, h: 0.42},
     ],
-    clicks: [{t: 5.6, x: 0.5, y: 0.12}],
+    clicks: [
+      {t: 3.9, x: 0.698, y: 0.428},
+      {t: 4.7, x: 0.792, y: 0.428},
+    ],
   },
 };
+
+/** Guest messaging scene: late-night questions, answered instantly by AI. */
+export type ChatCard = {
+  initials: string;
+  name: string;
+  property: string;
+  channel: 'Airbnb' | 'Booking.com' | 'VRBO' | 'Direct';
+  time: string;
+  language: string;
+  question: string;
+  answer: string;
+  /** Scene seconds when the card appears and when the AI reply lands. */
+  at: number;
+  replyAt: number;
+  x: number;
+  y: number;
+};
+
+export const CHAT_CARDS: ChatCard[] = [
+  {
+    initials: 'JW',
+    name: 'James Wilson',
+    property: 'Sunset Villa Malibu',
+    channel: 'Airbnb',
+    time: '11:42 PM',
+    language: 'English',
+    question: 'Is early check-in possible on Apr 7?',
+    answer: 'Hi James! Early check-in is available on April 7. We can welcome you from 10am.',
+    at: 0,
+    replyAt: 0.85,
+    x: 704,
+    y: 140,
+  },
+  {
+    initials: 'LM',
+    name: 'Lucía Moreno',
+    property: 'Ocean Breeze Condo',
+    channel: 'Booking.com',
+    time: '1:15 AM',
+    language: 'Español',
+    question: '¿Hay aparcamiento cerca del apartamento?',
+    answer: '¡Sí! Tienes una plaza gratuita justo al lado de la entrada.',
+    at: 2.9,
+    replyAt: 3.45,
+    x: 1268,
+    y: 338,
+  },
+  {
+    initials: 'JD',
+    name: 'Julien Dubois',
+    property: 'Mountain Retreat',
+    channel: 'VRBO',
+    time: '3:07 AM',
+    language: 'Français',
+    question: 'Le Wi-Fi est-il inclus ?',
+    answer: "Oui ! Le code Wi-Fi est dans votre guide d'arrivée.",
+    at: 3.85,
+    replyAt: 4.4,
+    x: 740,
+    y: 528,
+  },
+];

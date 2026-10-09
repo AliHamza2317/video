@@ -39,7 +39,12 @@ const cameraAt = (spec: ScreenSpec, t: number) => {
  * slow push-in / pan, highlight rings and cursor clicks. Without the asset it
  * shows a clearly labelled placeholder that animates the same way.
  */
-export const ScreenStage: React.FC<{spec: ScreenSpec; box: Box}> = ({spec, box}) => {
+export const ScreenStage: React.FC<{
+  spec: ScreenSpec;
+  box: Box;
+  /** A screen designed in code, used when no file is supplied. */
+  design?: {node: React.ReactNode; width: number; height: number};
+}> = ({spec, box, design}) => {
   const frame = useSceneFrame();
   const t = frame / FPS;
   const media = findScreen(spec.file);
@@ -92,17 +97,19 @@ export const ScreenStage: React.FC<{spec: ScreenSpec; box: Box}> = ({spec, box})
           ) : (
             <Img src={media.src} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
           )
+        ) : design ? (
+          <div style={{width: design.width, height: design.height, transformOrigin: '0 0', transform: `scale(${cw / design.width})`}}>
+            {design.node}
+          </div>
         ) : (
           <PlaceholderCanvas label={spec.label} />
         )}
         {spec.rings.map((r, i) => (
           <HighlightRing key={i} ring={r} cw={cw} ch={ch} zoom={s} frame={frame} until={spec.rings[i + 1]?.t} />
         ))}
-        {spec.clicks.map((c, i) => (
-          <CursorClick key={i} click={c} cw={cw} ch={ch} zoom={s} frame={frame} />
-        ))}
+        <Cursor clicks={spec.clicks} cw={cw} ch={ch} zoom={s} frame={frame} />
       </div>
-      {media ? null : <PlaceholderTag label={spec.label} file={spec.file} />}
+      {media || design ? null : <PlaceholderTag label={spec.label} file={spec.file} />}
     </div>
   );
 };
@@ -141,26 +148,41 @@ const HighlightRing: React.FC<{
   );
 };
 
-const CursorClick: React.FC<{
-  click: ScreenSpec['clicks'][number];
-  cw: number;
-  ch: number;
-  zoom: number;
-  frame: number;
-}> = ({click, cw, ch, zoom, frame}) => {
-  const at = sec(click.t);
-  const arrive = at - 14; // 0.45 s glide, ease-out
-  if (frame < arrive - 2) return null;
-  const move = tween(frame, arrive, at - 2, 0, 1, easeOut);
-  const x = (click.x + (1 - move) * 0.1) * cw;
-  const y = (click.y + (1 - move) * 0.12) * ch;
+/**
+ * One cursor per screen: it glides in to the first click, then from click to
+ * click (0.45 s ease-out each), and fades out 1.2 s after the last one.
+ */
+const Cursor: React.FC<{clicks: ScreenSpec['clicks']; cw: number; ch: number; zoom: number; frame: number}> = ({
+  clicks,
+  cw,
+  ch,
+  zoom,
+  frame,
+}) => {
+  if (clicks.length === 0) return null;
+  const GLIDE = 14;
+  const first = sec(clicks[0].t);
+  if (frame < first - GLIDE - 2) return null;
+
+  // Find the leg we are on.
+  let i = 0;
+  while (i + 1 < clicks.length && frame >= sec(clicks[i + 1].t) - GLIDE) i++;
+  const target = clicks[i];
+  const at = sec(target.t);
+  const from = i === 0 ? {x: target.x + 0.1, y: target.y + 0.12} : clicks[i - 1];
+  const move = tween(frame, at - GLIDE, at - 2, 0, 1, easeOut);
+  const x = (from.x + (target.x - from.x) * move) * cw;
+  const y = (from.y + (target.y - from.y) * move) * ch;
+
   const pressed = frame >= at && frame < at + 5;
   const ripple = tween(frame, at, at + 14, 0, 1, easeOut);
-  const fade = tween(frame, at + 36, at + 46, 1, 0);
+  const last = sec(clicks[clicks.length - 1].t);
+  const opacity = Math.min(tween(frame, first - GLIDE - 2, first - GLIDE + 4, 0, 1), tween(frame, last + 36, last + 46, 1, 0));
   const size = 46 / zoom;
+
   return (
-    <div style={{position: 'absolute', left: x, top: y, opacity: Math.min(fade, tween(frame, arrive - 2, arrive + 4, 0, 1))}}>
-      {frame >= at ? (
+    <div style={{position: 'absolute', left: x, top: y, opacity}}>
+      {frame >= at && ripple < 1 ? (
         <div
           style={{
             position: 'absolute',
