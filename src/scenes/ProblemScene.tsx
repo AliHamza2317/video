@@ -57,12 +57,12 @@ export const ProblemScene: React.FC = () => {
 };
 
 const ToolChip: React.FC<{tool: (typeof TOOLS)[number]; frame: number; index: number}> = ({tool, frame, index}) => {
-  const at = -4 + index * 3;
+  const at = -4 + index; // all five fully in by 0.3 s
   const jitter = tween(frame, 20, 140, 0.5, 2.5);
   const jx = Math.sin(frame * 1.6 + index * 2) * jitter;
   const jy = Math.cos(frame * 2.0 + index) * jitter;
   const Icon = tool.icon;
-  const e = enterScale(frame, at, 0.7, 12);
+  const e = enterScale(frame, at, 0.7, 9);
   return (
     <div
       style={{

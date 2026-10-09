@@ -10,7 +10,7 @@
 //   hostastic-voiceover.wav / .mp3     the narration on its own, -14 LUFS
 //   hostastic-explainer.srt            captions matching the burned-in ones
 //   timing-sheet.csv / .md             scene, line and caption timings
-import {execFileSync} from 'node:child_process';
+import {spawnSync} from 'node:child_process';
 import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
 
 const args = process.argv.slice(2);
@@ -39,11 +39,10 @@ mkdirSync('out/audio', {recursive: true});
 
 /** Runs ffmpeg and returns its log (stderr). */
 const ffmpeg = (...a) => {
-  try {
-    return execFileSync('ffmpeg', ['-hide_banner', '-nostats', ...a], {stdio: ['ignore', 'ignore', 'pipe'], maxBuffer: 1 << 26}).toString();
-  } catch (e) {
-    throw new Error(`ffmpeg ${a.join(' ')}\n${e.stderr?.toString() ?? e}`);
-  }
+  const res = spawnSync('ffmpeg', ['-hide_banner', '-nostats', ...a], {stdio: ['ignore', 'ignore', 'pipe'], maxBuffer: 1 << 26});
+  const log = res.stderr?.toString() ?? '';
+  if (res.status !== 0) throw new Error(`ffmpeg ${a.join(' ')}\n${log}`);
+  return log;
 };
 
 /** Two-pass EBU R128 loudness normalisation (linear gain when possible). */
@@ -66,9 +65,10 @@ const measure = (file) => {
   };
 };
 
-// 1. Voice, padded to the full length, at -14 LUFS.
+// 1. Voice as dual-mono stereo (what the MP4 carries), padded to the full
+//    length, at -14 LUFS.
 const voPadded = 'out/audio/vo-48k.wav';
-ffmpeg('-y', '-i', vo, '-af', `aresample=48000:resampler=soxr,apad=whole_dur=${DUR}`, '-t', String(DUR), '-c:a', 'pcm_s24le', voPadded);
+ffmpeg('-y', '-i', vo, '-af', `aresample=48000:resampler=soxr,pan=stereo|c0=c0|c1=c0,apad=whole_dur=${DUR}`, '-t', String(DUR), '-c:a', 'pcm_s24le', voPadded);
 const voMaster = 'out/audio/vo-master.wav';
 normalize(voPadded, voMaster, TARGET_LUFS);
 
@@ -92,7 +92,7 @@ if (music) {
   const mix = 'out/audio/mix.wav';
   ffmpeg(
     '-y', '-i', voMaster, '-i', bedNorm,
-    '-filter_complex', `[0:a]aformat=channel_layouts=stereo[v];[1:a]${musicFx}[m];[v][m]amix=inputs=2:normalize=0:duration=first[out]`,
+    '-filter_complex', `[1:a]${musicFx}[m];[0:a][m]amix=inputs=2:normalize=0:duration=first[out]`,
     '-map', '[out]', '-c:a', 'pcm_s24le', mix,
   );
   mixMaster = 'out/audio/mix-master.wav';
