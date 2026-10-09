@@ -6,6 +6,10 @@ A ~76-second, 7-scene explainer for the Hostastic website, built with [Remotion]
 - **Look:** flat 2D motion graphics, teal-and-white SaaS palette, muted colors in the opening "problem" scene
 - **Captions:** the full voiceover is burned in, because landing pages usually autoplay muted. A caption-free version and `.srt`/`.vtt` files are also available.
 
+## Rendered files
+
+`renders/` holds the latest render: `hostastic-explainer.mp4` (with burned-in captions), plus `captions.srt` and `captions.vtt` for players that load caption tracks.
+
 ## Quick start
 
 ```bash
