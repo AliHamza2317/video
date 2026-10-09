@@ -1,6 +1,5 @@
 import React from 'react';
 import {colors} from '../theme';
-import {LogoMark} from './Logo';
 
 type Pose = 'stressed' | 'relaxed';
 
@@ -17,7 +16,6 @@ export const HostCharacter: React.FC<{
   desk?: string;
   deskEdge?: string;
   lid?: string;
-  lidLogo?: boolean;
   mug?: boolean;
   style?: React.CSSProperties;
 }> = ({
@@ -29,7 +27,6 @@ export const HostCharacter: React.FC<{
   desk = colors.desk,
   deskEdge = colors.deskEdge,
   lid = '#E9EEF0',
-  lidLogo = false,
   mug = true,
   style,
 }) => {
@@ -138,13 +135,7 @@ export const HostCharacter: React.FC<{
       {/* Laptop (lid faces the viewer) */}
       <rect x="150" y="544" width="300" height="12" rx="6" fill="#B9C3C7" />
       <rect x="168" y="378" width="264" height="172" rx="16" fill={lid} />
-      {lidLogo ? (
-        <foreignObject x="272" y="436" width="56" height="56">
-          <LogoMark size={56} />
-        </foreignObject>
-      ) : (
-        <circle cx="300" cy="464" r="16" fill="#fff" opacity="0.6" />
-      )}
+      <circle cx="300" cy="464" r="16" fill="#fff" opacity="0.6" />
 
       {mug ? <Mug frame={frame} steam={!stressed} /> : null}
     </svg>

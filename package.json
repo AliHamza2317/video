@@ -5,10 +5,10 @@
   "description": "Hostastic explainer video (~76s, 7 scenes), built as code with Remotion.",
   "scripts": {
     "studio": "remotion studio",
-    "render": "remotion render HostasticExplainer out/hostastic-explainer.mp4",
-    "render:clean": "remotion render HostasticExplainerNoCaptions out/hostastic-explainer-no-captions.mp4",
-    "still": "remotion still HostasticExplainer out/poster.png --frame=2250",
-    "captions": "node --no-warnings scripts/export-captions.ts",
+    "voiceover": "python voiceover/build.py",
+    "render:video": "remotion render HostasticExplainer out/video.mp4 --muted",
+    "finish": "node scripts/finish.mjs",
+    "render": "npm run render:video && npm run finish",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -1,0 +1,56 @@
+{
+  "voice": "af_heart",
+  "speed": 0.94,
+  "leadIn": 0.55,
+  "gap": 0.26,
+  "cutLead": 0.12,
+  "minTotal": 45.0,
+  "maxScene": 9.0,
+  "fps": 30,
+  "lines": [
+    {
+      "id": "problem",
+      "display": "Running a vacation rental means juggling five tools for one calendar.",
+      "spoken": "Running a vacation rental means juggling five tools for one calendar.",
+      "captions": ["Running a vacation rental means juggling", "five tools for one calendar."]
+    },
+    {
+      "id": "solution",
+      "display": "Hostastic brings it all into one place.",
+      "spoken": "Hostastic brings it all into one place.",
+      "captions": ["Hostastic brings it all into one place."]
+    },
+    {
+      "id": "channels",
+      "display": "Sync Airbnb, Booking.com and Vrbo automatically. No double bookings, no manual updates.",
+      "spoken": "Sync Air B N B, Booking dot com and Verbo automatically. No double bookings, no manual updates.",
+      "captions": ["Sync Airbnb, Booking.com and Vrbo automatically.", "No double bookings, no manual updates."],
+      "spokenCaptions": ["Sync Air B N B, Booking dot com and Verbo automatically.", "No double bookings, no manual updates."]
+    },
+    {
+      "id": "direct",
+      "display": "Take direct bookings on your own branded website, with no commission and no middleman.",
+      "spoken": "Take direct bookings on your own branded website, with no commission and no middleman.",
+      "captions": ["Take direct bookings on your own branded website,", "with no commission and no middleman."]
+    },
+    {
+      "id": "ai",
+      "display": "Let AI answer repetitive guest messages, in any language, at any hour, while you focus on real hospitality.",
+      "spoken": "Let AI answer repetitive guest messages, in any language, at any hour, while you focus on real hospitality.",
+      "captions": ["Let AI answer repetitive guest messages,", "in any language, at any hour,", "while you focus on real hospitality."]
+    },
+    {
+      "id": "reporting",
+      "display": "See invoices, today's check-ins and checkouts, plus guest, property and channel reports. Free for every Hostastic user.",
+      "spoken": "See invoices, today's check-ins and checkouts, plus guest, property and channel reports. Free for every Hostastic user.",
+      "captions": ["See invoices, today's check-ins and checkouts,", "plus guest, property and channel reports.", "Free for every Hostastic user."]
+    },
+    {
+      "id": "close",
+      "display": "One platform. Every booking channel. That's Hostastic. Start today at hostasticnow.com.",
+      "spoken": "One platform. Every booking channel. That's Hostastic. Start today at Hostastic now dot com.",
+      "captions": ["One platform. Every booking channel.", "That's Hostastic.", "Start today at hostasticnow.com."],
+      "spokenCaptions": ["One platform. Every booking channel.", "That's Hostastic.", "Start today at Hostastic now dot com."]
+    }
+  ]
+}

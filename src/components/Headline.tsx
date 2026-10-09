@@ -1,62 +1,63 @@
 import React from 'react';
-import type {LucideIcon} from 'lucide-react';
-import {fadeUp} from '../anim';
+import {enter} from '../anim';
+import type {Headline as HeadlineSpec} from '../script';
 import {useSceneFrame} from '../sceneTime';
 import {colors, fonts} from '../theme';
-import {Chip} from './ui';
 
-/** Scene label chip + the storyboard's on-screen text. */
+/** Scene headline. Fully on screen within 0.3 s of the scene starting. */
 export const Headline: React.FC<{
-  chip?: {icon: LucideIcon; label: string};
-  lines: string[];
-  highlight?: number[];
-  sub?: string;
-  start?: number;
+  spec: HeadlineSpec;
   size?: number;
-  align?: 'left' | 'center' | 'right';
+  accentColor?: string;
+  color?: string;
+  align?: 'left' | 'center';
   style?: React.CSSProperties;
-}> = ({chip, lines, highlight = [], sub, start = 6, size = 76, align = 'left', style}) => {
+}> = ({spec, size = 74, accentColor = colors.teal, color = colors.ink, align = 'left', style}) => {
   const frame = useSceneFrame();
-  const items = align === 'right' ? 'flex-end' : align === 'center' ? 'center' : 'flex-start';
+  const start = -4; // the scene's sequence begins half a crossfade early
   return (
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: items, textAlign: align, ...style}}>
-      {chip ? (
-        <div style={{...fadeUp(frame, start, 18), marginBottom: 30}}>
-          <Chip icon={chip.icon} label={chip.label} size={24} />
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: align === 'center' ? 'center' : 'flex-start',
+        textAlign: align,
+        ...style,
+      }}
+    >
+      {spec.chip ? (
+        <div
+          style={{
+            ...enter(frame, start, 14),
+            marginBottom: 28,
+            padding: '9px 20px',
+            borderRadius: 999,
+            background: colors.tealTint,
+            color: colors.tealDark,
+            fontFamily: fonts.body,
+            fontWeight: 700,
+            fontSize: 24,
+          }}
+        >
+          {spec.chip}
         </div>
       ) : null}
-      {lines.map((line, i) => (
+      {spec.lines.map((line, i) => (
         <div
           key={line}
           style={{
-            ...fadeUp(frame, start + 6 + i * 7, 36, 22),
+            ...enter(frame, start + i * 2, 26),
             fontFamily: fonts.display,
             fontWeight: 800,
             fontSize: size,
             lineHeight: 1.08,
             letterSpacing: '-0.035em',
-            color: highlight.includes(i) ? colors.teal : colors.ink,
+            color: spec.accent?.includes(i) ? accentColor : color,
           }}
         >
           {line}
         </div>
       ))}
-      {sub ? (
-        <div
-          style={{
-            ...fadeUp(frame, start + 14 + lines.length * 7, 20),
-            marginTop: 28,
-            fontFamily: fonts.body,
-            fontWeight: 500,
-            fontSize: 26,
-            lineHeight: 1.45,
-            color: colors.slate,
-            maxWidth: 520,
-          }}
-        >
-          {sub}
-        </div>
-      ) : null}
     </div>
   );
 };

@@ -1,0 +1,165 @@
+{
+  "fps": 30,
+  "duration": 45.0,
+  "voice": "af_heart",
+  "speed": 0.94,
+  "scenes": [
+    {
+      "id": "problem",
+      "start": 0.0,
+      "end": 5.007
+    },
+    {
+      "id": "solution",
+      "start": 5.007,
+      "end": 7.852
+    },
+    {
+      "id": "channels",
+      "start": 7.852,
+      "end": 14.988
+    },
+    {
+      "id": "direct",
+      "start": 14.988,
+      "end": 20.269
+    },
+    {
+      "id": "ai",
+      "start": 20.269,
+      "end": 27.842
+    },
+    {
+      "id": "reporting",
+      "start": 27.842,
+      "end": 36.012
+    },
+    {
+      "id": "close",
+      "start": 36.012,
+      "end": 45.0
+    }
+  ],
+  "lines": [
+    {
+      "id": "problem",
+      "text": "Running a vacation rental means juggling five tools for one calendar.",
+      "start": 0.55,
+      "end": 4.867,
+      "cues": [
+        {
+          "text": "Running a vacation rental means juggling",
+          "start": 0.55
+        },
+        {
+          "text": "five tools for one calendar.",
+          "start": 3.115
+        }
+      ]
+    },
+    {
+      "id": "solution",
+      "text": "Hostastic brings it all into one place.",
+      "start": 5.127,
+      "end": 7.712,
+      "cues": [
+        {
+          "text": "Hostastic brings it all into one place.",
+          "start": 5.127
+        }
+      ]
+    },
+    {
+      "id": "channels",
+      "text": "Sync Airbnb, Booking.com and Vrbo automatically. No double bookings, no manual updates.",
+      "start": 7.972,
+      "end": 14.848,
+      "cues": [
+        {
+          "text": "Sync Airbnb, Booking.com and Vrbo automatically.",
+          "start": 7.972
+        },
+        {
+          "text": "No double bookings, no manual updates.",
+          "start": 11.663
+        }
+      ]
+    },
+    {
+      "id": "direct",
+      "text": "Take direct bookings on your own branded website, with no commission and no middleman.",
+      "start": 15.108,
+      "end": 20.129,
+      "cues": [
+        {
+          "text": "Take direct bookings on your own branded website,",
+          "start": 15.108
+        },
+        {
+          "text": "with no commission and no middleman.",
+          "start": 17.884
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "text": "Let AI answer repetitive guest messages, in any language, at any hour, while you focus on real hospitality.",
+      "start": 20.389,
+      "end": 27.702,
+      "cues": [
+        {
+          "text": "Let AI answer repetitive guest messages,",
+          "start": 20.389
+        },
+        {
+          "text": "in any language, at any hour,",
+          "start": 23.327
+        },
+        {
+          "text": "while you focus on real hospitality.",
+          "start": 25.311
+        }
+      ]
+    },
+    {
+      "id": "reporting",
+      "text": "See invoices, today's check-ins and checkouts, plus guest, property and channel reports. Free for every Hostastic user.",
+      "start": 27.962,
+      "end": 35.872,
+      "cues": [
+        {
+          "text": "See invoices, today's check-ins and checkouts,",
+          "start": 27.962
+        },
+        {
+          "text": "plus guest, property and channel reports.",
+          "start": 30.92
+        },
+        {
+          "text": "Free for every Hostastic user.",
+          "start": 33.81
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "text": "One platform. Every booking channel. That's Hostastic. Start today at hostasticnow.com.",
+      "start": 36.132,
+      "end": 42.63,
+      "cues": [
+        {
+          "text": "One platform. Every booking channel.",
+          "start": 36.132
+        },
+        {
+          "text": "That's Hostastic.",
+          "start": 38.504
+        },
+        {
+          "text": "Start today at hostasticnow.com.",
+          "start": 39.928
+        }
+      ]
+    }
+  ]
+}
