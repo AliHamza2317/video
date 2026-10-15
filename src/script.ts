@@ -63,6 +63,8 @@ export type ScreenSpec = {
   camera: CameraKey[];
   rings: Ring[];
   clicks: Click[];
+  /** Reel (1080x1920) overrides: a narrower frame needs its own framing. */
+  portrait?: {camera: CameraKey[]; rings?: Ring[]; clicks?: Click[]};
   /** For screen recordings: where to start playing, in seconds. */
   videoStart?: number;
 };
@@ -85,6 +87,14 @@ export const SCREENS: Record<'channels' | 'direct' | 'reporting', ScreenSpec> = 
       {t: 2.2, x: 0.4885, y: 0.411, w: 0.149, h: 0.042},
     ],
     clicks: [{t: 5.4, x: 0.946, y: 0.273}],
+    portrait: {
+      camera: [
+        {t: 0, x: 0.29, y: 0.4, zoom: 2.8},
+        {t: 2.0, x: 0.56, y: 0.43, zoom: 2.8},
+        {t: 4.4, x: 0.82, y: 0.33, zoom: 2.8},
+        {t: 7.2, x: 0.83, y: 0.35, zoom: 2.95},
+      ],
+    },
   },
   // Designed in the app's style (src/designs/BookingSiteDesign.tsx, 1600x1037):
   // the host's own domain, then Book now, the host notification and the
@@ -104,6 +114,15 @@ export const SCREENS: Record<'channels' | 'direct' | 'reporting', ScreenSpec> = 
       {t: 3.3, x: 0.652, y: 0.486, w: 0.314, h: 0.05},
     ],
     clicks: [{t: 2.3, x: 0.8125, y: 0.3857}],
+    portrait: {
+      camera: [
+        {t: 0, x: 0.5, y: 0.25, zoom: 2.0},
+        {t: 1.0, x: 0.52, y: 0.25, zoom: 2.0},
+        {t: 1.9, x: 0.8, y: 0.38, zoom: 2.0},
+        {t: 2.8, x: 0.8, y: 0.31, zoom: 2.0},
+        {t: 5.4, x: 0.81, y: 0.32, zoom: 2.1},
+      ],
+    },
   },
   // Designed in the app's style (src/designs/ReportsDesign.tsx, 1600x1037):
   // invoices, today's check-ins and checkouts, then guest, property and
@@ -127,6 +146,19 @@ export const SCREENS: Record<'channels' | 'direct' | 'reporting', ScreenSpec> = 
       {t: 3.9, x: 0.698, y: 0.428},
       {t: 4.7, x: 0.792, y: 0.428},
     ],
+    portrait: {
+      camera: [
+        {t: 0, x: 0.3, y: 0.48, zoom: 1.9},
+        {t: 2.9, x: 0.76, y: 0.55, zoom: 1.9},
+        {t: 5.6, x: 0.76, y: 0.64, zoom: 2.0},
+        {t: 8.2, x: 0.76, y: 0.66, zoom: 2.1},
+      ],
+      rings: [
+        {t: 0.3, x: 0.08, y: 0.343, w: 0.45, h: 0.4, hold: 1.1},
+        {t: 1.45, x: 0.076, y: 0.222, w: 0.446, h: 0.108, hold: 1.5},
+        {t: 5.5, x: 0.55, y: 0.469, w: 0.4125, h: 0.42},
+      ],
+    },
   },
 };
 

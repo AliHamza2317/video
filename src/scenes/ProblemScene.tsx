@@ -6,6 +6,7 @@ import {enterScale, tween} from '../anim';
 import {Headline} from '../components/Headline';
 import {HostCharacter} from '../components/HostCharacter';
 import {HEADLINES} from '../script';
+import {REEL, useIsPortrait} from '../layout';
 import {useSceneFrame} from '../sceneTime';
 import {colors, fonts} from '../theme';
 
@@ -18,39 +19,55 @@ const TOOLS: Array<{label: string; color: string; icon: LucideIcon; x: number; y
   {label: 'Messages', color: '#5E6E7A', icon: MessageSquare, x: 1690, y: 650, rotate: 6, badge: '12'},
 ];
 
+// Reel positions for the same five chips (centre points), clear of the
+// headline above and Instagram's right-hand buttons.
+const TOOLS_PORTRAIT: Array<[number, number]> = [
+  [250, 790],
+  [780, 770],
+  [850, 1040],
+  [230, 1080],
+  [790, 1300],
+];
+
 export const ProblemScene: React.FC = () => {
   const frame = useSceneFrame();
   const shake = tween(frame, 20, 140, 0, 4);
   const sx = (random(`sx-${Math.floor(frame / 2)}`) - 0.5) * 2 * shake;
   const sy = (random(`sy-${Math.floor(frame / 2)}`) - 0.5) * 2 * shake;
   const push = tween(frame, 0, 160, 1, 1.04, (x) => x);
+  const portrait = useIsPortrait();
 
   return (
     <AbsoluteFill style={{background: 'radial-gradient(ellipse at 65% 45%, #E8E4DD 0%, #D6D1C9 60%, #C3BEB5 100%)', overflow: 'hidden'}}>
-      <AbsoluteFill style={{transform: `translate(${sx}px, ${sy}px) scale(${push})`, transformOrigin: '1300px 540px', filter: 'saturate(0.6)'}}>
+      <AbsoluteFill style={{transform: `translate(${sx}px, ${sy}px) scale(${push})`, transformOrigin: portrait ? '540px 1050px' : '1300px 540px', filter: 'saturate(0.6)'}}>
         <HostCharacter
           pose="stressed"
           frame={frame}
-          width={560}
+          width={portrait ? 680 : 560}
           shirt="#7D8C99"
           chair="#4A4F55"
           desk="#C9BBA8"
           deskEdge="#B3A48F"
           lid="#D9DDDF"
-          style={{position: 'absolute', left: 1050, top: 318}}
+          style={{position: 'absolute', left: portrait ? 200 : 1050, top: portrait ? 810 : 318}}
         />
         {TOOLS.map((tool, i) => (
-          <ToolChip key={tool.label} tool={tool} frame={frame} index={i} />
+          <ToolChip
+            key={tool.label}
+            tool={portrait ? {...tool, x: TOOLS_PORTRAIT[i][0], y: TOOLS_PORTRAIT[i][1]} : tool}
+            frame={frame}
+            index={i}
+          />
         ))}
-        <ConflictAlert frame={frame} />
+        <ConflictAlert frame={frame} portrait={portrait} />
       </AbsoluteFill>
 
       <Headline
         spec={HEADLINES.problem}
-        size={84}
+        size={portrait ? 96 : 84}
         color={colors.dullInk}
         accentColor={colors.alarm}
-        style={{position: 'absolute', left: 110, top: 250}}
+        style={portrait ? {position: 'absolute', left: REEL.headlineLeft, top: REEL.headlineTop} : {position: 'absolute', left: 110, top: 250}}
       />
     </AbsoluteFill>
   );
@@ -116,7 +133,7 @@ const ToolChip: React.FC<{tool: (typeof TOOLS)[number]; frame: number; index: nu
   );
 };
 
-const ConflictAlert: React.FC<{frame: number}> = ({frame}) => {
+const ConflictAlert: React.FC<{frame: number; portrait: boolean}> = ({frame, portrait}) => {
   const at = 54;
   if (frame < at) return null;
   const e = enterScale(frame, at, 0.8, 10);
@@ -125,8 +142,8 @@ const ConflictAlert: React.FC<{frame: number}> = ({frame}) => {
     <div
       style={{
         position: 'absolute',
-        left: 1290,
-        top: 58,
+        left: portrait ? 540 : 1290,
+        top: portrait ? 650 : 58,
         opacity: e.opacity,
         transform: `translateX(-50%) ${e.transform} rotate(${wobble}deg)`,
         display: 'flex',

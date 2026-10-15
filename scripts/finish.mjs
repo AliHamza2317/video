@@ -1,6 +1,6 @@
 // Mixes, loudness-normalises and packages the rendered video.
 //
-//   node scripts/finish.mjs [--video out/video.mp4] [--music path/to/track.mp3]
+//   node scripts/finish.mjs [--video out/video.mp4] [--music path/to/track.mp3] [--prefix name]
 //
 // Inputs:  the silent render (npm run render:video), public/audio/voiceover.wav,
 //          and optionally a music file (or public/audio/music.mp3|wav|m4a).
@@ -29,6 +29,7 @@ const FADE_OUT = 2;
 const timeline = JSON.parse(readFileSync('src/timeline.json', 'utf8'));
 const DUR = timeline.duration;
 const video = opt('video', 'out/video.mp4');
+const prefix = opt('prefix', 'hostastic-explainer');
 const vo = 'public/audio/voiceover.wav';
 const music =
   opt('music') ?? ['public/audio/music.mp3', 'public/audio/music.wav', 'public/audio/music.m4a'].find((f) => existsSync(f));
@@ -103,8 +104,8 @@ if (music) {
 const mux = (audio, output) =>
   ffmpeg('-y', '-i', video, '-i', audio, '-map', '0:v:0', '-map', '1:a:0', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k',
     '-ar', '48000', '-ac', '2', '-shortest', '-movflags', '+faststart', output);
-mux(voMaster, 'renders/hostastic-explainer-no-music.mp4');
-if (mixMaster) mux(mixMaster, 'renders/hostastic-explainer.mp4');
+mux(voMaster, `renders/${prefix}-no-music.mp4`);
+if (mixMaster) mux(mixMaster, `renders/${prefix}.mp4`);
 
 // 4. Voiceover on its own.
 ffmpeg('-y', '-i', voMaster, '-c:a', 'pcm_s16le', '-ar', '48000', 'renders/hostastic-voiceover.wav');
@@ -147,7 +148,7 @@ writeFileSync(
 );
 
 // 6. Report.
-const outputs = ['renders/hostastic-explainer-no-music.mp4', mixMaster && 'renders/hostastic-explainer.mp4', 'renders/hostastic-voiceover.wav'];
+const outputs = [`renders/${prefix}-no-music.mp4`, mixMaster && `renders/${prefix}.mp4`, 'renders/hostastic-voiceover.wav'];
 for (const f of outputs.filter(Boolean)) {
   const {lufs, truePeak} = measure(f);
   console.log(`${f}: ${lufs} LUFS integrated, true peak ${truePeak} dBFS`);

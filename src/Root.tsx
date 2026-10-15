@@ -15,6 +15,15 @@ export const RemotionRoot: React.FC = () => (
       defaultProps={{showCaptions: true}}
     />
     <Composition
+      id="HostasticReel"
+      component={HostasticExplainer}
+      durationInFrames={TOTAL_FRAMES}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      defaultProps={{showCaptions: true}}
+    />
+    <Composition
       id="HostasticExplainerNoCaptions"
       component={HostasticExplainer}
       durationInFrames={TOTAL_FRAMES}

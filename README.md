@@ -38,6 +38,20 @@ A 45-second, 7-scene explainer for hostasticnow.com, built with [Remotion](https
 | `hostastic-explainer.srt` | Captions, identical to the burned-in ones |
 | `timing-sheet.md` / `.csv` | Scene, voiceover line and caption timings |
 
+## Instagram Reel
+
+`HostasticReel` is the same video re-laid out for Reels, not cropped: 1080×1920, 30 fps, 45 s, H.264 + AAC at -14 LUFS.
+
+- Each scene stacks vertically: headline on top, app screen below, captions under that.
+- App screens are zoomed tighter so the UI reads on a phone. The portrait camera paths live under `portrait` in `SCREENS`, in `src/script.ts`.
+- Key content stays out of the areas Instagram covers. Headlines start at y 300 and captions end at y 1560, leaving room for the top bar, the caption and username overlay, and the button column on the right. The layout constants are in `src/layout.ts`.
+- `renders/hostastic-reel-no-music.mp4` is the Reel. `renders/hostastic-reel-cover.png` is a caption-free cover frame to upload as the Reel cover.
+
+```bash
+npm run render:reel                                   # renders/hostastic-reel-no-music.mp4
+node scripts/finish.mjs --video out/reel.mp4 --prefix hostastic-reel --music track.mp3   # adds music
+```
+
 ## Commands
 
 ```bash

@@ -2,6 +2,7 @@ import React from 'react';
 import {getStaticFiles, Img, OffthreadVideo, staticFile} from 'remotion';
 import {easeInOut, easeOut, enterScale, tween} from '../anim';
 import {FPS, ScreenSpec, sec} from '../script';
+import {useIsPortrait} from '../layout';
 import {useSceneFrame} from '../sceneTime';
 import {colors, fonts} from '../theme';
 
@@ -20,8 +21,7 @@ export const findScreen = (file: string) => {
 type Box = {x: number; y: number; w: number; h: number};
 
 /** Interpolated camera (centre point + zoom) at a scene time in seconds. */
-const cameraAt = (spec: ScreenSpec, t: number) => {
-  const keys = spec.camera;
+const cameraAt = (keys: ScreenSpec['camera'], t: number) => {
   if (t <= keys[0].t) return keys[0];
   for (let i = 0; i < keys.length - 1; i++) {
     const a = keys[i];
@@ -48,13 +48,17 @@ export const ScreenStage: React.FC<{
   const frame = useSceneFrame();
   const t = frame / FPS;
   const media = findScreen(spec.file);
+  const portrait = useIsPortrait();
+  const camera = (portrait && spec.portrait?.camera) || spec.camera;
+  const rings = (portrait && spec.portrait?.rings) || spec.rings;
+  const clicks = (portrait && spec.portrait?.clicks) || spec.clicks;
 
   // Canvas covers the frame at zoom 1.
   const frameAspect = box.w / box.h;
   const cw = spec.aspect >= frameAspect ? box.h * spec.aspect : box.w;
   const ch = spec.aspect >= frameAspect ? box.h : box.w / spec.aspect;
 
-  const cam = cameraAt(spec, t);
+  const cam = cameraAt(camera, t);
   const s = cam.zoom;
   const tx = Math.min(0, Math.max(box.w - cw * s, box.w / 2 - cam.x * cw * s));
   const ty = Math.min(0, Math.max(box.h - ch * s, box.h / 2 - cam.y * ch * s));
@@ -104,10 +108,10 @@ export const ScreenStage: React.FC<{
         ) : (
           <PlaceholderCanvas label={spec.label} />
         )}
-        {spec.rings.map((r, i) => (
-          <HighlightRing key={i} ring={r} cw={cw} ch={ch} zoom={s} frame={frame} until={spec.rings[i + 1]?.t} />
+        {rings.map((r, i) => (
+          <HighlightRing key={i} ring={r} cw={cw} ch={ch} zoom={s} frame={frame} until={rings[i + 1]?.t} />
         ))}
-        <Cursor clicks={spec.clicks} cw={cw} ch={ch} zoom={s} frame={frame} />
+        <Cursor clicks={clicks} cw={cw} ch={ch} zoom={s} frame={frame} />
       </div>
       {media || design ? null : <PlaceholderTag label={spec.label} file={spec.file} />}
     </div>
